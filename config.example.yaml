@@ -1,0 +1,76 @@
+# nightcrawler seed configuration
+#
+# Imported once into an EMPTY database on first start (mounted at /config/config.yaml).
+# Afterwards everything is managed in the web UI; Settings → Data lets you export/import
+# this format again. ${VAR} / ${VAR:-default} are resolved from the environment (.env) at
+# runtime, so secrets never need to be stored in the database or this file.
+
+settings:
+  gone_after_missed_runs: 2
+  retention_days: 90
+  http_delay_seconds: 2
+  respect_robots_txt: true
+  notify_price_drop_pct: 5
+  # Apprise URLs: discord://…, tgram://…, ntfy://…, mailtos://…  (or set them in the UI)
+  notification_urls: []
+
+sources:
+  # Official eBay Browse API - free keys at https://developer.ebay.com (Production keyset).
+  ebay:
+    type: ebay
+    enabled: ${EBAY_ENABLED:-false}
+    client_id: ${EBAY_CLIENT_ID}
+    client_secret: ${EBAY_CLIENT_SECRET}
+    marketplace: EBAY_DE
+    currency: EUR
+
+  # Any Shopify-based shop via its public products.json feed.
+  refurb-shop:
+    type: shopify
+    enabled: false
+    store_url: https://some-refurb-store.example
+    default_condition: refurbished
+    currency: EUR
+    shipping_cost: 0
+
+  # Generic HTML adapter. This one points at webscraper.io's public scraping sandbox
+  # so a fresh install has something to show. {query} and {page} are substituted.
+  demo-shop:
+    type: html
+    search_url: https://webscraper.io/test-sites/e-commerce/static/computers/{query}?page={page}
+    max_pages: 20
+    filter_locally: false
+    currency: USD
+    default_condition: new
+    selectors:
+      item: div.card.thumbnail
+      title: a.title
+      link: a.title
+      price: "[itemprop=price]"
+      image: img
+      description: p.description
+
+searches:
+  - name: Demo · laptops
+    query: laptops
+    sources: [demo-shop]
+    conditions: any
+    max_results: 200
+    interval_minutes: 720
+
+  - name: Demo · tablets
+    query: tablets
+    sources: [demo-shop]
+    conditions: any
+    max_results: 200
+    interval_minutes: 720
+
+  - name: Nintendo Switch OLED
+    query: nintendo switch oled
+    sources: [ebay]
+    conditions: [new, used, refurbished]
+    min_price: 150
+    max_price: 320
+    exclude_keywords: [defekt, hülle, case, spiel, suche, tausch]
+    ai_filter: Only complete Nintendo Switch OLED consoles. No games, cases, docks or other accessories on their own.
+    interval_minutes: 60

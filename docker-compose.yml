@@ -1,0 +1,19 @@
+services:
+  nightcrawler:
+    build: .
+    image: ghcr.io/hoody424/nightcrawler:latest
+    container_name: nightcrawler
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    env_file:
+      - path: .env
+        required: false
+    volumes:
+      # Database, settings and the Claude login live here - back it up.
+      - nightcrawler-data:/data
+      # Optional: your own seed config (only used when the database is empty).
+      # - ./config.yaml:/config/config.yaml:ro
+
+volumes:
+  nightcrawler-data:

@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>nightcrawler</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕷</text></svg>">
+<link rel="stylesheet" href="/static/app.css">
+</head>
+<body>
+<div id="app" class="app">
+  <header class="topbar">
+    <button class="icon-btn nav-toggle" id="navToggle" aria-label="Menu">☰</button>
+    <a class="brand" href="#/"><span class="brand-logo">🕷</span><span>nightcrawler</span></a>
+    <form class="global-search" id="globalSearch" autocomplete="off">
+      <span class="gs-icon">⌕</span>
+      <input id="globalSearchInput" type="search" placeholder="Search listings…  (try ✨ AI: “used ThinkPad 16GB under 400€, not defective”)">
+      <label class="ai-toggle" title="Interpret the search with Claude and set the filters for you">
+        <input type="checkbox" id="aiSearchToggle"><span>✨ AI</span>
+      </label>
+    </form>
+    <div class="topbar-right">
+      <div id="crawlStatus" class="crawl-status" hidden></div>
+      <button class="icon-btn" id="themeToggle" title="Toggle light/dark theme" aria-label="Toggle theme">🌓</button>
+    </div>
+  </header>
+  <nav class="sidenav" id="sidenav">
+    <a href="#/" data-route="dashboard"><span class="ni">▦</span>Dashboard</a>
+    <a href="#/products" data-route="products"><span class="ni">◈</span>Products</a>
+    <a href="#/watchlists" data-route="watchlists"><span class="ni">☰</span>Watchlists</a>
+    <a href="#/sources" data-route="sources"><span class="ni">⛁</span>Sources</a>
+    <a href="#/runs" data-route="runs"><span class="ni">↻</span>Runs</a>
+    <a href="#/settings" data-route="settings"><span class="ni">⚙</span>Settings</a>
+    <div class="nav-foot" id="navFoot"></div>
+  </nav>
+  <main class="main" id="main"></main>
+</div>
+<div id="drawerRoot"></div>
+<div id="modalRoot"></div>
+<div id="toastRoot" class="toasts"></div>
+<div id="compareTray" class="compare-tray" hidden></div>
+<script type="module" src="/static/app.js"></script>
+</body>
+</html>

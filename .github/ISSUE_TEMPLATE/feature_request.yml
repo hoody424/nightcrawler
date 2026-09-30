@@ -1,0 +1,14 @@
+name: Feature request
+description: Suggest an idea or a new source adapter
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What would you like to do?
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: How could it work?

@@ -1,0 +1,18 @@
+[project]
+name = "nightcrawler"
+version = "1.0.0"
+description = "Self-hosted crawler for new and used products with Geizhals-style filters and Claude-powered AI"
+requires-python = ">=3.11"
+license = "GPL-3.0-only"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = [".", "tests"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]
+ignore = ["B008", "E731"]

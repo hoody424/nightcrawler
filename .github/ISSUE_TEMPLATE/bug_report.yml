@@ -1,0 +1,27 @@
+name: Bug report
+description: Something isn't working
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What did you do, what did you expect, what happened instead?
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs / run messages
+      description: "`docker compose logs nightcrawler` or the messages from the Runs page. Remove tokens and keys!"
+      render: text
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Shown at the bottom of the sidebar (e.g. v1.0.0) or the image tag.
+  - type: dropdown
+    id: source
+    attributes:
+      label: Affected source type
+      options: [not source-related, ebay, shopify, html, other]
