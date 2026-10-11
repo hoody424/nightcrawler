@@ -4,6 +4,10 @@ on:
   push:
     branches: [main]
     tags: ["v*"]
+  # Weekly rebuild without cache: picks up base image fixes and the newest
+  # Claude Code CLI (npm install is not pinned).
+  schedule:
+    - cron: "23 4 * * 1"
   workflow_dispatch:
 
 permissions:
@@ -38,5 +42,6 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          no-cache: ${{ github.event_name == 'schedule' }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
