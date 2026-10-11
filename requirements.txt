@@ -5,4 +5,4 @@ PyYAML>=6.0
 fastapi>=0.115
 uvicorn>=0.30
 apprise>=1.8
-anthropic>=1.0,<2
+anthropic>=1.12.1,<2
