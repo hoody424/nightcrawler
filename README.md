@@ -123,11 +123,19 @@ Notes
 
 | Type | What it's for | Setup |
 |---|---|---|
-| `ebay` | eBay via the official Browse API — condition, shipping, seller rating, auctions, item location | Create a free Production keyset at [developer.ebay.com](https://developer.ebay.com/my/keys), set `EBAY_ENABLED=true`, `EBAY_CLIENT_ID`, `EBAY_CLIENT_SECRET`. Pick the marketplace (EBAY_DE, EBAY_US, …) in the UI. |
+| `ebay` | eBay via the official Browse API — condition, shipping, seller rating, auctions, item location | Free Production keyset from developer.ebay.com, `EBAY_CLIENT_ID` + `EBAY_CLIENT_SECRET` — see [eBay setup](#ebay-setup). |
 | `shopify` | Any Shopify-based shop (many refurb / second-hand resellers) via its public `products.json` | Just the store URL and a default condition. |
 | `html` | Any other shop or classifieds site | Search URL with `{query}` / `{page}` placeholders + CSS selectors. Use **Run test** to see what gets parsed and which specs are extracted, or **✨ Detect selectors** to let Claude propose them. |
 
 Secrets in source options can be written as `${ENV_VAR}` — they're resolved at runtime and never stored in the database.
+
+### eBay setup
+
+1. Register at [developer.ebay.com](https://developer.ebay.com) and create a **Production** keyset under *Application Keys* (Sandbox has only fake listings). App ID → `EBAY_CLIENT_ID`, Cert ID → `EBAY_CLIENT_SECRET`.
+2. eBay keeps a new Production keyset disabled until you handle [Marketplace Account Deletion](https://developer.ebay.com/marketplace-account-deletion): subscribe with an HTTPS endpoint (nightcrawler has none) or opt out. Opting out is meant for apps that store no eBay user data; nightcrawler stores the seller's username with each listing.
+3. Set the two variables and restart the container. `EBAY_ENABLED=true` only enables the source when the database is first created; later, enable it on the **Sources** page, pick the marketplace (and optionally an item country) and click **Run test**.
+
+Each watchlist run costs one API call per 200 results — hourly checks use about 24 calls a day. Your daily quota is shown in the developer portal.
 
 ## Filters — how they work
 
