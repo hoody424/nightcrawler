@@ -1,5 +1,5 @@
 requests>=2.31
-beautifulsoup4>=4.12
+beautifulsoup4>=4.15.0
 lxml>=5.0
 PyYAML>=6.0
 fastapi>=0.115
