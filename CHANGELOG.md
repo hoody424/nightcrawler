@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- Docker: `PUID` / `PGID` select the user the app runs as; `/data` ownership is fixed at start, so
+  bind mounts owned by another user (Unraid appdata) work. `docker exec … claude` runs as that user too.
+- Unraid Community Applications template.
+
 ## 1.0.0 - 2026-09-30
 
 First public release.

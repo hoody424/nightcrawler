@@ -94,6 +94,10 @@ docker run -d --name nightcrawler -p 8080:8080 -v nightcrawler-data:/data \
 
 All state (database, settings, Claude login) lives in the `/data` volume — back it up, and updates are just `docker compose pull && docker compose up -d`.
 
+The container starts as root, hands `/data` to `PUID`:`PGID` and then drops to that user, so a
+bind mount such as `/mnt/user/appdata/nightcrawler` just works. **Unraid:** install *nightcrawler*
+from Community Applications (template in [hoody424/unraid-templates](https://github.com/hoody424/unraid-templates/tree/main/nightcrawler)).
+
 ## AI with your Claude subscription
 
 nightcrawler talks to Claude through the official **Claude Code CLI**, which is bundled in the image. That lets it use your **Claude Pro or Max subscription** — no API billing.
@@ -160,6 +164,7 @@ Environment variables (all optional):
 | `NIGHTCRAWLER_DB` | Database path (default `/data/nightcrawler.db`) |
 | `NIGHTCRAWLER_CONFIG` | Seed YAML used when the database is empty (default `/config/config.yaml`) |
 | `PORT` | Web port (default `8080`) |
+| `PUID`, `PGID` | User/group the app runs as and that owns `/data` (default `10001`; Unraid: `99` / `100`) |
 
 Everything else — watchlists, sources, notification targets, crawl politeness, retention, AI model/effort/limits — is managed in the web UI and stored in SQLite. **Settings → Data** exports/imports it as YAML (see [`config.example.yaml`](config.example.yaml)); secrets are never exported.
 
