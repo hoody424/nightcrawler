@@ -2,7 +2,7 @@
 
 # --- Claude Code CLI: powers the AI features with a Claude Pro/Max subscription.
 # The npm package ships a native binary, so the final image needs no Node.js.
-FROM node:22-slim AS claude-code
+FROM node:25-slim AS claude-code
 RUN npm install -g @anthropic-ai/claude-code && npm cache clean --force
 
 # --- nightcrawler -------------------------------------------------------------
