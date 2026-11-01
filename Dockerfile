@@ -6,7 +6,7 @@ FROM node:22-slim AS claude-code
 RUN npm install -g @anthropic-ai/claude-code && npm cache clean --force
 
 # --- nightcrawler -------------------------------------------------------------
-FROM python:3.12-slim
+FROM python:3.15-slim
 
 LABEL org.opencontainers.image.title="nightcrawler" \
       org.opencontainers.image.description="Self-hosted crawler for new & used products with Geizhals-style filters and Claude-powered AI" \
